@@ -1,0 +1,55 @@
+<%= form_with model: life_path, url: life_path_path(life_path), method: :patch,
+      data: { turbo_frame: "life_path_#{life_path.id}" } do |f| %>
+
+  <% if life_path.errors.any? %>
+    <div class="alert alert-danger small py-2">
+      <% life_path.errors.full_messages.each do |msg| %>
+        <div><%= msg %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="mb-2">
+    <%= f.label :name, class: "form-label form-label-sm fw-medium mb-1" %>
+    <%= f.text_field :name, class: "form-control form-control-sm" %>
+  </div>
+
+  <div class="mb-2">
+    <%= f.label :positioning, class: "form-label form-label-sm fw-medium mb-1" %>
+    <%= f.text_area :positioning, class: "form-control form-control-sm", rows: 2 %>
+  </div>
+
+  <div class="mb-2">
+    <%= f.label :milestones, class: "form-label form-label-sm fw-medium mb-1" %>
+    <%= f.text_area :milestones, class: "form-control form-control-sm", rows: 3 %>
+    <div class="form-text">One milestone per line: Year 1, Year 3, Year 10.</div>
+  </div>
+
+  <div class="mb-2">
+    <%= f.label :demands, class: "form-label form-label-sm fw-medium mb-1" %>
+    <%= f.text_area :demands, class: "form-control form-control-sm", rows: 3 %>
+    <div class="form-text">One demand per line.</div>
+  </div>
+
+  <div class="mb-2">
+    <%= f.label :trade_offs, class: "form-label form-label-sm fw-medium mb-1" %>
+    <%= f.text_area :trade_offs, class: "form-control form-control-sm", rows: 3 %>
+    <div class="form-text">One trade-off per line.</div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :real_people, class: "form-label form-label-sm fw-medium mb-1" %>
+    <%= f.text_area :real_people, class: "form-control form-control-sm", rows: 3 %>
+    <div class="form-text">One profile per line.</div>
+  </div>
+
+  <div class="d-flex gap-2">
+    <%= f.submit "Save",
+          class: "btn btn-sm",
+          style: "background-color: var(--accent); color: #fff;" %>
+    <%= link_to "Cancel", path_set_path(life_path.path_set),
+          class: "btn btn-sm btn-outline-secondary",
+          data: { turbo_frame: "life_path_#{life_path.id}" } %>
+  </div>
+
+<% end %>

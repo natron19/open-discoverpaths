@@ -1,0 +1,52 @@
+<%= turbo_frame_tag "life_path_#{life_path.id}" do %>
+  <div class="card h-100 <%= 'exit-path' if life_path.is_exit_path? %> <%= 'long-shot' if life_path.is_long_shot? %>">
+    <div class="card-body">
+
+      <%# Type badge %>
+      <% if life_path.is_exit_path? %>
+        <span class="badge bg-secondary mb-2">Exit Path</span>
+      <% elsif life_path.is_long_shot? %>
+        <span class="badge badge-accent mb-2">Long-Shot Path</span>
+      <% end %>
+
+      <%# Name + edit link %>
+      <div class="d-flex justify-content-between align-items-start mb-1">
+        <h5 class="card-title mb-0"><%= life_path.name %></h5>
+        <%= link_to "Edit", edit_life_path_path(life_path),
+              data: { turbo_frame: "life_path_#{life_path.id}" },
+              class: "btn btn-sm btn-outline-secondary py-0 px-2 flex-shrink-0 ms-2" %>
+      </div>
+
+      <p class="text-muted small mb-3"><%= life_path.positioning %></p>
+
+      <h6 class="text-muted text-uppercase mb-1" style="font-size: 0.7rem; letter-spacing: 0.05em;">Milestones</h6>
+      <ul class="list-unstyled small mb-3">
+        <% life_path.milestones.split("\n").each do |m| %>
+          <li><%= m %></li>
+        <% end %>
+      </ul>
+
+      <h6 class="text-muted text-uppercase mb-1" style="font-size: 0.7rem; letter-spacing: 0.05em;">Demands</h6>
+      <ol class="small mb-3 ps-3">
+        <% life_path.demands.split("\n").each do |d| %>
+          <li><%= d %></li>
+        <% end %>
+      </ol>
+
+      <h6 class="text-muted text-uppercase mb-1" style="font-size: 0.7rem; letter-spacing: 0.05em;">Trade-offs</h6>
+      <ol class="small mb-3 ps-3">
+        <% life_path.trade_offs.split("\n").each do |t| %>
+          <li><%= t %></li>
+        <% end %>
+      </ol>
+
+      <h6 class="text-muted text-uppercase mb-1" style="font-size: 0.7rem; letter-spacing: 0.05em;">Real People</h6>
+      <ul class="list-unstyled small mb-0">
+        <% life_path.real_people.split("\n").each do |p| %>
+          <li class="mb-1">— <%= p %></li>
+        <% end %>
+      </ul>
+
+    </div>
+  </div>
+<% end %>

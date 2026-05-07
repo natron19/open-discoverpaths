@@ -1,0 +1,91 @@
+<%# Header %>
+<div class="d-flex justify-content-between align-items-start mb-3">
+  <div>
+    <h1 class="h3 mb-1">Path Set</h1>
+    <p class="text-muted small mb-0">
+      Generated <%= time_ago_in_words(@path_set.generated_at) %> ago
+      &nbsp;·&nbsp;
+      Based on your foundation as of <%= @path_set.personal_foundation.updated_at.strftime("%b %-d, %Y") %>
+    </p>
+  </div>
+  <%= button_to "Regenerate", regenerate_path_set_path(@path_set),
+        method: :post,
+        class: "btn",
+        style: "background-color: var(--accent); color: #fff;" %>
+</div>
+
+<%# Panel toggle wrapper — controller owns both the buttons and the panels %>
+<div data-controller="panel-toggle" data-panel-toggle-active-value="0">
+
+  <div class="btn-group mb-4" role="group">
+    <button type="button" class="btn btn-outline-secondary active"
+            data-panel-toggle-target="button"
+            data-action="click->panel-toggle#show">
+      Card Row
+    </button>
+    <button type="button" class="btn btn-outline-secondary"
+            data-panel-toggle-target="button"
+            data-action="click->panel-toggle#show">
+      Compare Two
+    </button>
+  </div>
+
+  <%# Card row panel %>
+  <div data-panel-toggle-target="panel" class="mb-4">
+    <div class="path-card-row">
+      <% @life_paths.each do |lp| %>
+        <%= render "path_card", life_path: lp %>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Compare selector panel %>
+  <div data-panel-toggle-target="panel" class="mb-4"
+       data-controller="path-compare"
+       data-path-compare-base-url-value="<%= compare_path_set_path(@path_set) %>">
+    <p class="text-muted small mb-2">Select two paths to compare them side by side.</p>
+    <%= form_with url: compare_path_set_path(@path_set), method: :get do |f| %>
+      <div class="row g-2 align-items-end">
+        <div class="col-md-5">
+          <%= f.select :path_a,
+                @life_paths.map { |lp| [lp.name, lp.id] },
+                { prompt: "Select Path A" },
+                class: "form-select",
+                data: { path_compare_target: "path_a_select", action: "change->path-compare#update" } %>
+        </div>
+        <div class="col-md-5">
+          <%= f.select :path_b,
+                @life_paths.map { |lp| [lp.name, lp.id] },
+                { prompt: "Select Path B" },
+                class: "form-select",
+                data: { path_compare_target: "path_b_select", action: "change->path-compare#update" } %>
+        </div>
+        <div class="col-md-2">
+          <%= f.submit "Compare",
+                class: "btn btn-secondary w-100",
+                disabled: true,
+                data: { path_compare_target: "compare_link" } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+</div>
+
+<%# Raw response toggle %>
+<div class="mb-4">
+  <button class="btn btn-sm btn-outline-secondary" type="button"
+          data-bs-toggle="collapse" data-bs-target="#raw-response">
+    Show raw response
+  </button>
+  <div class="collapse mt-2" id="raw-response">
+    <pre class="border rounded p-3 small" style="max-height: 400px; overflow-y: auto; white-space: pre-wrap;"><%= @path_set.gemini_raw %></pre>
+  </div>
+</div>
+
+<%# Disclaimer — required on every path set view %>
+<div class="card disclaimer-card">
+  <div class="card-body">
+    <em>These paths are starting points for your own thinking. They are generated from what you wrote in your foundation, which means they reflect what you told the system about yourself, not what is true about you. Sit with each path. Talk to people walking it. Edit the texture as you learn what you actually believe. DiscoverPaths offers paths; it does not pick one for you.</em>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="mb-0">Your Foundation</h1>
+  <%= link_to "Edit", edit_personal_foundation_path, class: "btn btn-outline-secondary" %>
+</div>
+
+<% [
+  ["Values",             @foundation.values],
+  ["Strengths",          @foundation.strengths],
+  ["Constraints",        @foundation.constraints],
+  ["Resources",          @foundation.resources],
+  ["Current Trajectory", @foundation.current_trajectory]
+].each do |label, content| %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h6 class="text-muted text-uppercase mb-2" style="font-size: 0.75rem; letter-spacing: 0.05em;"><%= label %></h6>
+      <p class="mb-0" style="white-space: pre-wrap;"><%= content %></p>
+    </div>
+  </div>
+<% end %>

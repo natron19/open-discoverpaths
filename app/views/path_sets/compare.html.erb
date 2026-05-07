@@ -1,0 +1,16 @@
+<h1 class="h3 mb-1">Comparing Paths</h1>
+<p class="text-muted small mb-1">
+  Comparing <strong><%= @path_a.name %></strong> and <strong><%= @path_b.name %></strong>.
+</p>
+<p class="text-muted small mb-4">Switch one at a time to feel the trade-offs honestly.</p>
+
+<%= link_to "← Back to all paths", path_set_path(@path_set), class: "btn btn-sm btn-outline-secondary mb-4" %>
+
+<div class="row">
+  <div class="col-md-6 mb-3">
+    <%= render "path_card", life_path: @path_a %>
+  </div>
+  <div class="col-md-6 mb-3">
+    <%= render "path_card", life_path: @path_b %>
+  </div>
+</div>

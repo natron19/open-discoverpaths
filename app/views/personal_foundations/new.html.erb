@@ -1,0 +1,10 @@
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <h1 class="mb-1">Start Your Foundation</h1>
+    <p class="text-muted mb-4">Your foundation is the input to every path set you generate. Be honest — vague inputs produce generic paths.</p>
+    <%= render "form",
+          url: personal_foundation_path,
+          method_override: :post,
+          submit_text: "Save Foundation" %>
+  </div>
+</div>

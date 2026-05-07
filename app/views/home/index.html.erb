@@ -1,0 +1,110 @@
+<div class="container py-5">
+
+  <%# Hero %>
+  <div class="row justify-content-center text-center mb-5">
+    <div class="col-lg-8">
+      <h1 class="display-5 fw-bold mb-3"><%= ENV.fetch("APP_NAME", "DiscoverPaths Demo") %></h1>
+      <p class="lead text-muted mb-4"><%= ENV.fetch("APP_TAGLINE", "") %></p>
+      <p class="mb-4">
+        This demo takes a Personal Foundation — your values, strengths, constraints, resources,
+        and current trajectory — and returns a Path Set of 4 to 6 candidate life paths you can
+        hold side by side. Each path has concrete milestones, honest demands, real trade-offs,
+        and profiles of people walking it. DiscoverPaths offers paths. It does not pick one for you.
+      </p>
+      <div class="d-flex gap-3 justify-content-center">
+        <%= link_to "Get Started", sign_up_path, class: "btn btn-lg", style: "background-color: var(--accent); color: #fff;" %>
+        <%= link_to "Sign In", sign_in_path, class: "btn btn-lg btn-outline-secondary" %>
+      </div>
+    </div>
+  </div>
+
+  <%# Offer-not-prescribe callout %>
+  <div class="row justify-content-center mb-5">
+    <div class="col-lg-7">
+      <div class="card text-center">
+        <div class="card-body py-4">
+          <blockquote class="blockquote mb-0">
+            <p>"<%= ENV.fetch("APP_NAME", "DiscoverPaths") %> offers paths. It does not prescribe one."</p>
+          </blockquote>
+          <p class="text-muted small mt-2 mb-0">Career quizzes hand you a job title. A blank ChatGPT prompt hands you confident but unspecific advice. The PATHS frame insists on several options held together — with honest texture — so you can do the choosing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Sample card preview (static mockup) %>
+  <div class="row justify-content-center mb-5">
+    <div class="col-12">
+      <h4 class="text-center mb-3">What a path looks like</h4>
+      <div class="path-card-row justify-content-center">
+
+        <div class="card long-shot" style="min-width: 300px; max-width: 340px;">
+          <div class="card-body">
+            <span class="badge badge-accent mb-2">Long-Shot Path</span>
+            <h5 class="card-title">Build a SaaS for design teams</h5>
+            <p class="text-muted small">Turn a workflow problem into a small, sustainable product.</p>
+            <h6 class="text-muted text-uppercase" style="font-size: 0.7rem;">Milestones</h6>
+            <ul class="list-unstyled small mb-2">
+              <li>Year 1: 10 paying customers</li>
+              <li>Year 3: $5k MRR</li>
+              <li>Year 10: Acquired or self-sustaining</li>
+            </ul>
+            <h6 class="text-muted text-uppercase" style="font-size: 0.7rem;">Trade-offs</h6>
+            <ol class="small mb-0">
+              <li>High failure rate</li>
+              <li>Years before payoff</li>
+              <li>Financial risk without a co-founder</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="card" style="min-width: 300px; max-width: 340px;">
+          <div class="card-body">
+            <h5 class="card-title">Independent Consultant</h5>
+            <p class="text-muted small">Run a one-person design consulting practice serving 3–5 clients at a time.</p>
+            <h6 class="text-muted text-uppercase" style="font-size: 0.7rem;">Milestones</h6>
+            <ul class="list-unstyled small mb-2">
+              <li>Year 1: First two retainer clients</li>
+              <li>Year 3: $120k revenue</li>
+              <li>Year 10: Established practice with a waiting list</li>
+            </ul>
+            <h6 class="text-muted text-uppercase" style="font-size: 0.7rem;">Trade-offs</h6>
+            <ol class="small mb-0">
+              <li>No employer benefits</li>
+              <li>Slower career signal than a senior title</li>
+              <li>Isolation without deliberate community</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="card exit-path" style="min-width: 300px; max-width: 340px;">
+          <div class="card-body">
+            <span class="badge bg-secondary mb-2">Exit Path</span>
+            <h5 class="card-title">Return to Stable Employment</h5>
+            <p class="text-muted small">Take a well-scoped senior IC role at a larger company.</p>
+            <h6 class="text-muted text-uppercase" style="font-size: 0.7rem;">Milestones</h6>
+            <ul class="list-unstyled small mb-2">
+              <li>Year 1: Role secured with good scope</li>
+              <li>Year 3: One promotion</li>
+              <li>Year 10: Staff or principal title</li>
+            </ul>
+            <h6 class="text-muted text-uppercase" style="font-size: 0.7rem;">Trade-offs</h6>
+            <ol class="small mb-0">
+              <li>Less autonomy</li>
+              <li>Newsletter stays a hobby</li>
+              <li>Slower wealth building</li>
+            </ol>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <%# Sign-up CTA (repeated at bottom) %>
+  <div class="text-center">
+    <p class="text-muted mb-3">Sign up and write your own foundation. Generate your first Path Set in under five minutes.</p>
+    <%= link_to "Start for Free", sign_up_path, class: "btn btn-lg", style: "background-color: var(--accent); color: #fff;" %>
+  </div>
+
+</div>
