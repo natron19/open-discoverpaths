@@ -29,31 +29,16 @@
   --bs-btn-disabled-border-color: #65a30d;
 }
 
-/* Path card horizontal scroll row */
-.path-card-row {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 1rem;
-}
-.path-card-row > .card {
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-  min-width: 320px;
-  max-width: 380px;
-}
-
-/* Path type badges and card borders */
+/* Path type badges and accordion borders */
 .badge-accent {
   background-color: var(--accent);
   color: #fff;
 }
-.card.exit-path {
-  border: 2px solid var(--bs-secondary) !important;
+.accordion-item.exit-path {
+  border-left: 3px solid var(--bs-secondary) !important;
 }
-.card.long-shot {
-  border: 2px solid var(--accent) !important;
+.accordion-item.long-shot {
+  border-left: 3px solid var(--accent) !important;
 }
 .disclaimer-card {
   color: var(--bs-secondary-color);

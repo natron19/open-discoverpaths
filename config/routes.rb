@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     member do
       post :regenerate
       get  :compare
+      get  :download
     end
   end
   resources :life_paths, only: [:edit, :update]

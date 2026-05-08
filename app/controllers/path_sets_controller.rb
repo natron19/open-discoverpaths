@@ -1,5 +1,5 @@
 class PathSetsController < ApplicationController
-  before_action :load_path_set, only: [:show, :regenerate, :compare]
+  before_action :load_path_set, only: [:show, :regenerate, :compare, :download]
   rate_limit to: 10, within: 1.minute, only: [:create, :regenerate],
              by: -> { current_user&.id || request.remote_ip },
              with: -> { render partial: "shared/ai_error", locals: { error_type: :error } }
@@ -67,6 +67,13 @@ class PathSetsController < ApplicationController
     render "path_sets/ai_error"
   end
 
+  def download
+    life_paths = @path_set.life_paths.order(:position)
+    markdown   = build_markdown(@path_set, life_paths)
+    filename   = "discoverpaths-#{@path_set.generated_at.strftime('%Y-%m-%d')}.md"
+    send_data markdown, filename: filename, type: "text/markdown", disposition: "attachment"
+  end
+
   def compare
     if params[:path_a].blank? || params[:path_b].blank?
       return redirect_to path_set_path(@path_set)
@@ -79,6 +86,51 @@ class PathSetsController < ApplicationController
   end
 
   private
+
+  def build_markdown(path_set, life_paths)
+    lines = []
+    lines << "# Path Set"
+    lines << ""
+    lines << "Generated #{path_set.generated_at.strftime('%B %-d, %Y')} · " \
+             "Based on your foundation as of #{path_set.personal_foundation.updated_at.strftime('%b %-d, %Y')}"
+    lines << ""
+
+    life_paths.each do |lp|
+      lines << "---"
+      lines << ""
+
+      header = "## #{lp.name}"
+      header += " *(Exit Path)*"    if lp.is_exit_path?
+      header += " *(Long-Shot Path)*" if lp.is_long_shot?
+      lines << header
+      lines << ""
+      lines << lp.positioning
+      lines << ""
+
+      lines << "### Milestones"
+      lp.milestones.split("\n").each { |m| lines << "- #{m}" }
+      lines << ""
+
+      lines << "### Demands"
+      lp.demands.split("\n").each_with_index { |d, i| lines << "#{i + 1}. #{d}" }
+      lines << ""
+
+      lines << "### Trade-offs"
+      lp.trade_offs.split("\n").each_with_index { |t, i| lines << "#{i + 1}. #{t}" }
+      lines << ""
+
+      lines << "### Real People"
+      lp.real_people.split("\n").each { |p| lines << "- #{p}" }
+      lines << ""
+    end
+
+    lines << "---"
+    lines << ""
+    lines << "*These paths are starting points for your own thinking, generated from what you wrote in your foundation.*"
+    lines << ""
+
+    lines.join("\n")
+  end
 
   def load_path_set
     @path_set = current_user.path_sets

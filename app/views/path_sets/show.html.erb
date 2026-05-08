@@ -8,10 +8,14 @@
       Based on your foundation as of <%= @path_set.personal_foundation.updated_at.strftime("%b %-d, %Y") %>
     </p>
   </div>
-  <%= button_to "Regenerate", regenerate_path_set_path(@path_set),
-        method: :post,
-        class: "btn",
-        style: "background-color: var(--accent); color: #fff;" %>
+  <div class="d-flex gap-2">
+    <%= link_to "Download", download_path_set_path(@path_set),
+          class: "btn btn-outline-secondary" %>
+    <%= button_to "Regenerate", regenerate_path_set_path(@path_set),
+          method: :post,
+          class: "btn",
+          style: "background-color: var(--accent); color: #fff;" %>
+  </div>
 </div>
 
 <%# Panel toggle wrapper — controller owns both the buttons and the panels %>
@@ -21,7 +25,7 @@
     <button type="button" class="btn btn-outline-secondary active"
             data-panel-toggle-target="button"
             data-action="click->panel-toggle#show">
-      Card Row
+      Paths
     </button>
     <button type="button" class="btn btn-outline-secondary"
             data-panel-toggle-target="button"
@@ -30,11 +34,11 @@
     </button>
   </div>
 
-  <%# Card row panel %>
+  <%# Accordion panel %>
   <div data-panel-toggle-target="panel" class="mb-4">
-    <div class="path-card-row">
-      <% @life_paths.each do |lp| %>
-        <%= render "path_card", life_path: lp %>
+    <div class="accordion" id="paths-accordion">
+      <% @life_paths.each_with_index do |lp, i| %>
+        <%= render "path_card", life_path: lp, open: i == 0 %>
       <% end %>
     </div>
   </div>
