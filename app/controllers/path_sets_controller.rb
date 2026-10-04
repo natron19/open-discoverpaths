@@ -19,6 +19,9 @@ class PathSetsController < ApplicationController
   rescue GeminiService::BudgetExceededError
     @error_type = :budget_exceeded
     render "path_sets/ai_error"
+  rescue GeminiService::CrisisError
+    @error_type = :crisis
+    render "path_sets/ai_error"
   rescue GeminiService::GatekeeperError
     @error_type = :gatekeeper_blocked
     render "path_sets/ai_error"
@@ -55,6 +58,9 @@ class PathSetsController < ApplicationController
 
   rescue GeminiService::BudgetExceededError
     @error_type = :budget_exceeded
+    render "path_sets/ai_error"
+  rescue GeminiService::CrisisError
+    @error_type = :crisis
     render "path_sets/ai_error"
   rescue GeminiService::GatekeeperError
     @error_type = :gatekeeper_blocked

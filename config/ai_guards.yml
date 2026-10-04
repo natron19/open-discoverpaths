@@ -1,0 +1,31 @@
+# Per-app guardrail configuration, read by AiGuardConfig.
+# See docs/ai-guardrails.md (Layer 1b: AiOutputGuard) and docs/ai-evals.md.
+
+# DiscoverPaths is a crisis-adjacent app: people describe their whole life
+# situation. Inputs containing any of these phrases get crisis resources instead
+# of an AI call. Bare "suicide" is deliberately omitted so people exploring
+# careers in suicide prevention or crisis counseling are not blocked.
+crisis_terms:
+  - kill myself
+  - end my life
+  - take my own life
+  - suicidal
+  - commit suicide
+  - want to die
+  - hurt myself
+  - harm myself
+  - self harm
+  - self-harm
+  - no reason to live
+  - better off dead
+
+# Output structure rules per AiTemplate name.
+#   format:        text | json
+#   required_keys: top-level keys the JSON object must contain
+templates:
+  health_ping:
+    format: text
+  # PathSetsController#parse_paths raises unless data["paths"] is an Array.
+  discoverpaths_pathset_v1:
+    format: json
+    required_keys: [paths]
