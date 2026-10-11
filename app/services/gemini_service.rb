@@ -145,6 +145,8 @@ class GeminiService
              .map { |p| p["text"].to_s }
              .join
 
+    text    = AiOutputGuard.repair_json_text(text, ai_template.name)
+
     prompt_tokens   = body.dig("usageMetadata", "promptTokenCount")     || estimate_tokens(full_prompt)
     response_tokens = billed_output_tokens(body) || estimate_tokens(text)
 
